@@ -6,6 +6,8 @@
  */
 
 export default async function handler(req, res) {
+    console.log("GET (/api/rates) req.method", req?.method);
+    
     const {method = 'GET'} = req
 
     switch (req.method) {
