@@ -52,7 +52,15 @@ export default class MNBCurrencyRates extends React.Component{
                                 <th>Árfolyam (HUF)</th>
                             </tr>
                         </thead>
-                        <tbody>{JSON.stringify(rates)}</tbody>
+                        <tbody>
+                            {
+                                rates.map((rate)=><tr key={rate.curr}>
+                                    <td>{rate.curr}</td>
+                                    <td>{rate.unit}</td>
+                                    <td>{rate.value}</td>
+                                </tr>)
+                            }
+                        </tbody>
                     </table>
                 </div>
 
