@@ -1,3 +1,32 @@
+import {XMLParser} from 'fast-xml-parser';
+
+const parser = new XMLParser({
+    ignoreAttributes: false,   // az attribútumok (curr, unit, date) is kellenek
+    attributeNamePrefix: '@_', // attribútum kulcsok: @_curr, @_unit, @_date
+    removeNSPrefix: true,      // s:Envelope -> Envelope
+    parseTagValue: false,      // a "367,73000" maradjon string
+})
+
+function parseRates(resXml) {
+    // 1. lépés: SOAP boríték
+    const envelope = parser.parse(resXml)
+    const innerXml =
+        envelope.Envelope.Body.GetCurrentExchangeRatesResponse.GetCurrentExchangeRatesResult
+
+    // 2. lépés: a benne lévő XML string
+    const inner = parser.parse(innerXml)
+    const day = inner.MNBCurrentExchangeRates.Day
+
+    return {
+        date: day['@_date'],
+        rates: [].concat(day.Rate).map((r) => ({
+            curr: r['@_curr'],
+            unit: Number(r['@_unit']),
+            value: Number(r['#text'].replace(',', '.')),
+        })),
+    }
+}
+
 /**
  * GET /api/rates
  * Endpoint for getting currency rates HUF from MNB by SOAP
@@ -33,6 +62,9 @@ export default async function handler(req, res) {
             
             const resXML = await soapRes.text()
             console.log("resXML: ", resXML);
+            
+            const parsed = parseRates(resXML)
+            console.log("parsed: ", parsed);
             
 
             const rates = []
