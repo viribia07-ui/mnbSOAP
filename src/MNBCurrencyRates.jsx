@@ -21,7 +21,7 @@ export default class MNBCurrencyRates extends React.Component{
             const res = await fetch("/api/rates") //megjegyezni
             const json = await res.json()
             console.log("MNB comp. json", json);
-            
+
             const {date = new Date(Date.now()), rates = []} = json
             
             //TODO - set state from respone
