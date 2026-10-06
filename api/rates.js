@@ -54,7 +54,8 @@ export default async function handler(req, res) {
                 headers: {
                     "Content-Type": "text/xml",
                     "SOAPAction": '"http://www.mnb.hu/webservices/MNBArfolyamServiceSoap/GetCurrentExchangeRates"'
-                }
+                },
+                body: reqBodyXML
             })
             console.log('soapRes', soapRes);
             
