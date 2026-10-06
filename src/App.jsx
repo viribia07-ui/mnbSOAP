@@ -1,15 +1,18 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import MNBCurrencyRates from './MNBCurrencyRates'
+
+/**
+ * TODO - refactor App to class component
+ * @returns 
+ */
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
     <>
-      <h1>MNB Árfolyamok</h1>
+      <h1>MNB Árfolyamok (TODO date)</h1>
       <div className="card">
         <MNBCurrencyRates/>
       </div>
