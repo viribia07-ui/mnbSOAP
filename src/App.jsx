@@ -9,6 +9,7 @@ import MNBCurrencyRates from './MNBCurrencyRates'
 
 function App() {
   const [count, setCount] = useState(0)
+  const cim = <h1>Cím</h1>
 
   return (
     <>
